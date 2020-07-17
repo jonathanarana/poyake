@@ -5,42 +5,21 @@
 */
 class MySQL
 {
-  private $host=null;
-  private $port=null;
-  private $user=null;
-  private $password=null;
-  private $dbname=null;
-  private $conection=null;
-  private $count=0;
+  static protected $host='localhost';
+  static protected $port='3306';
+  static protected $user='dev';
+  static protected $password='primermaster';
+  static protected $dbname='poyake';
+  static $conection=null;
+  static $count=0;
 
-  function __construct($host,$port,$user,$password,$dbname)
+  public static function conect()
   {
-    $this->host=$host;
-    $this->port=$port;
-    $this->user=$user;
-    $this->password=$password;
-    $this->dbname=$dbname;
-  }
-
-  public function conect()
-  {
-    if ($this->conection===null) {
-      $this->conection = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->user, $this->password);
+    if (self::$conection===null) {
+      self::$conection = new PDO("mysql:host=".self::$host.";dbname=".self::$dbname.";port=".self::$port, self::$user, self::$password);
     }
-    $this->count++; //contador para validar el singleton
-    return $this->conection;
-  }
-
-  public function getUser($id)
-  {
-    $consulta = $this->conection->prepare("SELECT * FROM users WHERE id = :id");
-    $consulta->bindParam(":id", $id, PDO::PARAM_INT);
-    $consulta->execute();
-    return $consulta->fetchAll();
-  }
-  public function getN()
-  {
-    return $this->count;
+    self::$count++; //contador para validar el singleton
+    return self::$conection;
   }
 }
 
