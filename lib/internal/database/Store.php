@@ -10,9 +10,10 @@ class Store
     $res['id']=Store::find($arr);
     $res['status']='encontrado';
     if ($res['id'] === 0) {
-      $consulta = MySQL::$conection->prepare("INSERT INTO users (user, password, active) VALUES (:user, :pass, :active);");
-      $consulta->bindParam(":user", $arr['user']);
-      $consulta->bindParam(":pass", $arr['pass']);
+      $consulta = MySQL::$conection->prepare("INSERT INTO shopping (quantity, description, price, active) VALUES (:quantity, :description, :price, :active);");
+      $consulta->bindParam(":quantity", $arr['quantity']);
+      $consulta->bindParam(":description", $arr['description']);
+      $consulta->bindParam(":price", $arr['price']);
       $consulta->bindParam(":active", $arr['active'], PDO::PARAM_INT);
       $consulta->execute();
       $res['status']='creado';
@@ -27,10 +28,16 @@ class Store
     $consulta->execute();
     return $consulta->fetchAll();
   }
+  public static function get_all()
+  {
+    $consulta = MySQL::$conection->prepare("SELECT * FROM shopping");
+    $consulta->execute();
+    return $consulta->fetchAll();
+  }
   public static function find($arr)
   {
-    $consulta = MySQL::$conection->prepare("SELECT id FROM users WHERE user=:user limit 1;");
-    $consulta->bindParam(':user', $arr['user']);
+    $consulta = MySQL::$conection->prepare("SELECT id FROM shopping WHERE description=:description limit 1;");
+    $consulta->bindParam(':description', $arr['description']);
     $consulta->execute();
 
     $res = $consulta->fetch();
