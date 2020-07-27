@@ -1,0 +1,7 @@
+table{
+  width: 100%;
+}
+table * {
+  margin: 0;
+  border: solid black 1px;
+}
