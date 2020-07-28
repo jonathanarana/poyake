@@ -7,9 +7,9 @@ class Store
   //CRUD
   public static function save($table,$arr)
   {
-    // $res['id']=Store::find($arr);
-    // $res['status']='encontrado';
-    // if ($res['id'] === 0) {
+    $res['id']=Store::find($table,$arr);
+    $res['status']='encontrado';
+    if ($res['id'] === 0) {
       $consulta = MySQL::$conection->prepare("INSERT INTO ".$table." (quantity, description, price, active) VALUES (:quantity, :description, :price, :active);");
       $consulta->bindParam(":quantity", $arr['quantity']);
       $consulta->bindParam(":description", $arr['description']);
@@ -17,8 +17,8 @@ class Store
       $consulta->bindParam(":active", $arr['active'], PDO::PARAM_INT);
       $consulta->execute();
       $res['status']='creado';
-      //$res['id']=$consulta->lastInsertId();
-    // }
+      $res['id']=MySQL::$conection->lastInsertId();
+    }
     return $res;
   }
   public static function get($id)

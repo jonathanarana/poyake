@@ -27,7 +27,7 @@ submit.addEventListener('click',function (event) {
   fetch('/?route=add-to-list', {
     method: 'POST',
     body: datos
-  }).then(response => response)
+  }).then(response => response.json())
   .then(data => {
     console.log(data);
     get_all();
