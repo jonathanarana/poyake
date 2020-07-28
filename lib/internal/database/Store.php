@@ -5,21 +5,21 @@
 class Store
 {
   //CRUD
-  public static function save($arr)
+  public static function save($table,$arr)
   {
-    $res['id']=Store::find($arr);
-    $res['status']='encontrado';
-    if ($res['id'] === 0) {
-      $consulta = MySQL::$conection->prepare("INSERT INTO shopping (quantity, description, price, active) VALUES (:quantity, :description, :price, :active);");
+    // $res['id']=Store::find($arr);
+    // $res['status']='encontrado';
+    // if ($res['id'] === 0) {
+      $consulta = MySQL::$conection->prepare("INSERT INTO ".$table." (quantity, description, price, active) VALUES (:quantity, :description, :price, :active);");
       $consulta->bindParam(":quantity", $arr['quantity']);
       $consulta->bindParam(":description", $arr['description']);
       $consulta->bindParam(":price", $arr['price']);
       $consulta->bindParam(":active", $arr['active'], PDO::PARAM_INT);
       $consulta->execute();
       $res['status']='creado';
-      $res['id']=$consulta->lastInsertId();
-    }
-    return json_encode($res);
+      //$res['id']=$consulta->lastInsertId();
+    // }
+    return $res;
   }
   public static function get($id)
   {
@@ -28,15 +28,15 @@ class Store
     $consulta->execute();
     return $consulta->fetchAll();
   }
-  public static function get_all()
+  public static function get_all($table)
   {
-    $consulta = MySQL::$conection->prepare("SELECT * FROM shopping");
+    $consulta = MySQL::$conection->prepare("SELECT * FROM ".$table);
     $consulta->execute();
-    return $consulta->fetchAll();
+    return $consulta->fetchAll(PDO::FETCH_ASSOC);
   }
-  public static function find($arr)
+  public static function find($table, $arr)
   {
-    $consulta = MySQL::$conection->prepare("SELECT id FROM shopping WHERE description=:description limit 1;");
+    $consulta = MySQL::$conection->prepare("SELECT id FROM ".$table." WHERE description=:description limit 1;");
     $consulta->bindParam(':description', $arr['description']);
     $consulta->execute();
 
