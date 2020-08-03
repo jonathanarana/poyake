@@ -31,6 +31,14 @@
 </thead>
 <tbody id="lista">
 </tbody>
+<tfoot>
+  <tr>
+    <th>Artículos: n</th>
+    <th></th>
+    <th>Total: $0.00</th>
+    <th>Adquiridos: n de n</th>
+  </tr>
+</tfoot>
 </table>
 </div>
 </body>

@@ -5,11 +5,26 @@ function get_all() {
     return res.json();
   }).then(function (data) {
     let lista = document.getElementById('lista');
-    lista.innerHTML='';
+    let content='';
+
     data.forEach(function (item) {
-      lista.innerHTML += '<tr><td>'+item.quantity+'</td><td>'+item.description+'</td><td>'+item.price+'</td><td>'+item.active+'</td></tr>';
+      content += '<tr><td>'+item.quantity+'</td><td>'+item.description+'</td><td>'+item.price+'</td> <td> <input type="checkbox" ';
+      if (item.active == 1) {
+        content += ' checked ';
+
+      }
+      content += ' onchange="changeStatus('+ item.id +')" > <button type="button" onclick="deleteItem('+ item.id +')"> X </button> </td></tr>';
     });
+    lista.innerHTML = content;
   })
+}
+
+function deleteItem(id) {
+  console.log(id);
+}
+
+function changeStatus(id) {
+  console.log(id);
 }
 
 let submit = document.getElementById('submit');

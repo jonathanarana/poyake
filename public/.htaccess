@@ -1,4 +1,5 @@
 RewriteEngine on
 Options +FollowSymLinks
 
-RewriteRule ^(.*)/$ index.php?route=$1
+RewriteCond $1 !^(css|js|images|robots.txt)
+# RewriteRule ^(.*)$ /index.php/?route=$1 [L]
