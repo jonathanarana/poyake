@@ -1,7 +1,7 @@
 console.log('ready');
 get_all();
 function get_all() {
-  fetch('/?route=get-all-lista').then(function (res) {
+  fetch('Lista/getAll').then(function (res) {
     return res.json();
   }).then(function (data) {
     let lista = document.getElementById('lista');
@@ -39,7 +39,7 @@ submit.addEventListener('click',function (event) {
   datos.append('active', false);
 
   console.log(JSON.stringify(datos));
-  fetch('/?route=add-to-list', {
+  fetch('/Lista/create', {
     method: 'POST',
     body: datos
   }).then(response => response.json())
